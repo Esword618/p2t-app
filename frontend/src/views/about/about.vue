@@ -4,7 +4,7 @@
       <!--开头信息-->
       <el-descriptions
         class="margin-top"
-        title="P2t-app Info"
+        :title="title"
         :column="3"
         size="large"
         border
@@ -202,6 +202,8 @@ import { ElNotification } from "element-plus";
 
 const { toClipboard } = useClipboard();
 
+const title = ref("P2t-app V0.1.1");
+
 const drawer = ref(false);
 // 公众号图片
 const gzhImg = ref(
@@ -213,6 +215,11 @@ const timeActivities = [
     content: "v0.1.0 发布（基础功能完成）",
     color: "#0bbd87",
     timestamp: "2023.02.25",
+  },
+  {
+    content: "v0.1.1 发布（修复文字与公式无法一起渲染bug，加入对公式编辑立即渲染功能）",
+    color: "#434de7",
+    timestamp: "2023.02.26",
   },
 ];
 // 感谢

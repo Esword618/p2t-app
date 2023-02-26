@@ -5,7 +5,6 @@ import router from "./router";
 import i18n from "./i18n";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import ElementPlus from "element-plus";
-import VueLatex from "vatex";
 
 import "element-plus/dist/index.css";
 
@@ -31,6 +30,5 @@ app.use(createPinia());
 app.use(router);
 app.use(i18n);
 app.use(ElementPlus);
-app.use(VueLatex);
 app.mount("#app");
 //https://github.com/Shimada666/VaTex

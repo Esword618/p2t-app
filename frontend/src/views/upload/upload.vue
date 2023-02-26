@@ -35,13 +35,13 @@
                 :autosize="{ minRows: 8, maxRows: 8 }"
                 type="textarea"
                 resize="none"
-                placeholder="解析结果"
+                placeholder="formula 公式:"
               />
             </el-card>
           </el-col>
           <el-col :span="12">
             <el-card shadow="hover" class="textarea-formula-card">
-              <vue-latex :expression="formula" display-mode />
+              <div v-html="formulaResults"></div>
             </el-card>
           </el-col>
         </el-row>
@@ -51,24 +51,46 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
+import { onMounted, ref, watch } from "vue";
 import UploadArea from "@/components/upload-area/upload-area.vue";
 import { ElNotification } from "element-plus";
 import { EventsEmit, EventsOn } from "../../../wailsjs/runtime";
 import imgStore from "@/store/imgStore";
 import userStore from "@/store/userStore";
-import { ref } from "vue";
+import mathjax3 from "markdown-it-mathjax3";
+import md from "markdown-it";
+
+const Md = md({
+  breaks: true,
+}).use(mathjax3, {
+  loader: { load: ["input/tex", "output/chtml"] },
+  tex: {
+    inlineMath: [
+      ["$", "$"],
+      ["\\(", "\\)"],
+    ],
+  },
+});
 
 const useImgeStore = imgStore();
 const IUserStore = userStore();
 const loading = ref(false);
 const formula = ref("");
+const formulaResults = ref("");
 // const formula = ref("");
 
 // 动态监听 formula 公式
-// const formula = computed(() => {
-//   return IUserStore.formula;
+// formulaResults.value: = computed(() => {
+//   return Md.render(formula.value);
 // });
+// 动态监听 formula 公式改变
+watch(
+  formula,
+  () => {
+    formulaResults.value = Md.render(formula.value);
+  },
+  { deep: true, immediate: true }
+);
 
 onMounted(() => {
   // 获取 go 发送过来的解析结果
@@ -76,8 +98,10 @@ onMounted(() => {
     if (message != "") {
       const v = infoHandler(message);
       if (v) {
-        formula.value = v.substring(2, v.length - 2);
-        IUserStore.formula = v.substring(2, v.length - 2);
+        // formula.value = v.substring(2, v.length - 2);
+        IUserStore.formula = v;
+        formula.value = v;
+        formulaResults.value = Md.render(v);
         notificationSuccess("success", "解析成功");
       } else {
         notificationError("error", "什么也没识别到！");

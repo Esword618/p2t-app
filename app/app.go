@@ -1,12 +1,17 @@
 package app
 
 import (
+	"bytes"
 	"context"
 	"encoding/base64"
 	"fmt"
 	"github.com/imroc/req/v3"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"golang.design/x/clipboard"
+	"golang.org/x/image/draw"
+	"image"
+	"image/color"
+	"image/jpeg"
 	"log"
 	"strings"
 )
@@ -112,7 +117,7 @@ func (a *App) parse() {
 			"user-agent":         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
 		}).
 		SetFileBytes("image", "image", a.file). // Set form param name and filename
-		SetFormData(map[string]string{ // Set form data while uploading
+		SetFormData(map[string]string{          // Set form data while uploading
 			"session_id": "session-AiYJrY-bxFfzzCwOA9Kb4cyWfpdJnt6q",
 		}).
 		Post("https://p2t.behye.com/api/pix2text")
@@ -120,7 +125,28 @@ func (a *App) parse() {
 		log.Println(err)
 	}
 	result, _ := res.ToString()
-	fmt.Println(result)
+	//fmt.Println(result)
 	runtime.EventsEmit(a.ctx, "parse_result", result)
 	//fmt.Println("发送完成")
+}
+
+// 图片压缩功能
+func compressImage(data []byte) []byte {
+	imgSrc, _, err := image.Decode(bytes.NewReader(data))
+	if err != nil {
+		return data
+	}
+	newImg := image.NewRGBA(imgSrc.Bounds())
+	draw.Draw(newImg, newImg.Bounds(), &image.Uniform{C: color.White}, image.Point{}, draw.Src)
+	draw.Draw(newImg, newImg.Bounds(), imgSrc, imgSrc.Bounds().Min, draw.Over)
+
+	buf := bytes.Buffer{}
+	err = jpeg.Encode(&buf, newImg, &jpeg.Options{Quality: 80})
+	if err != nil {
+		return data
+	}
+	if buf.Len() > len(data) {
+		return data
+	}
+	return buf.Bytes()
 }
