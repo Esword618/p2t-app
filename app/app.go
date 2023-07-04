@@ -66,17 +66,13 @@ func (a *App) DomReady(ctx context.Context) {
 	// 在这里添加你的操作
 }
 
-// beforeClose is called when the application is about to quit,
-// either by clicking the window close button or calling runtime.Quit.
-// Returning true will cause the application to continue,
-// false will continue shutdown as normal.
-// beforeClose在单击窗口关闭按钮或调用runtime.Quit即将退出应用程序时被调用.
+// BeforeClose 在单击窗口关闭按钮或调用runtime.Quit即将退出应用程序时被调用.
 // 返回 true 将导致应用程序继续，false 将继续正常关闭。
 func (a *App) BeforeClose(ctx context.Context) (prevent bool) {
 	return false
 }
 
-// shutdown is called at application termination
+// Shutdown is called at application termination
 // 在应用程序终止时被调用
 func (a *App) Shutdown(ctx context.Context) {
 	// Perform your teardown here
@@ -106,7 +102,6 @@ func (a *App) parse() {
 	client := req.C()
 	res, err := client.R().
 		SetHeaders(map[string]string{
-			"cookie":             "__atuvc=1^%^7C8; __atuvs=63f992ec1481c1e1000",
 			"origin":             "https://p2t.behye.com",
 			"referer":            "https://p2t.behye.com/",
 			"sec-ch-ua-mobile":   "?0",
@@ -118,14 +113,13 @@ func (a *App) parse() {
 		}).
 		SetFileBytes("image", "image", a.file). // Set form param name and filename
 		SetFormData(map[string]string{          // Set form data while uploading
-			"session_id": "session-AiYJrY-bxFfzzCwOA9Kb4cyWfpdJnt6q",
+			"session_id": "",
 		}).
 		Post("https://p2t.behye.com/api/pix2text")
 	if err != nil {
 		log.Println(err)
 	}
 	result, _ := res.ToString()
-	//fmt.Println(result)
 	runtime.EventsEmit(a.ctx, "parse_result", result)
 	//fmt.Println("发送完成")
 }

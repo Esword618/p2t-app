@@ -202,7 +202,7 @@ import { ElNotification } from "element-plus";
 
 const { toClipboard } = useClipboard();
 
-const title = ref("P2t-app V0.1.1");
+const title = ref("P2t-app V0.1.2");
 
 const drawer = ref(false);
 // 公众号图片
@@ -220,6 +220,11 @@ const timeActivities = [
     content: "v0.1.1 发布（修复文字与公式无法一起渲染bug，加入对公式编辑立即渲染功能）",
     color: "#434de7",
     timestamp: "2023.02.26",
+  },
+  {
+    content: "v0.1.2 发布（与官方api的返回结果适配）",
+    color: "#19afc9",
+    timestamp: "2023.07.04",
   },
 ];
 // 感谢

@@ -95,17 +95,15 @@ watch(
 onMounted(() => {
   // 获取 go 发送过来的解析结果
   EventsOn("parse_result", (message: string) => {
-    if (message != "") {
-      const v = infoHandler(message);
-      if (v) {
-        // formula.value = v.substring(2, v.length - 2);
-        IUserStore.formula = v;
-        formula.value = v;
-        formulaResults.value = Md.render(v);
-        notificationSuccess("success", "解析成功");
-      } else {
-        notificationError("error", "什么也没识别到！");
-      }
+    console.log(message);
+    const info = JSON.parse(message);
+    if (info["status_code"] == 200) {
+      // formula.value = v.substring(2, v.length - 2);
+      IUserStore.formula = info["results"];
+      formula.value = info["results"];
+      formulaResults.value = Md.render(info["results"]);
+      notificationSuccess("success", "解析成功");
+      // const v = infoHandler(message);
     } else {
       notificationError("error", "识别失败，请稍后重试");
     }
@@ -113,12 +111,6 @@ onMounted(() => {
   });
 });
 
-const infoHandler = (message: string) => {
-  const data = JSON.parse(message);
-  // console.log(data);
-  const results = data.results;
-  return results.map((item: { text: any }) => item.text).join("\n");
-};
 
 // 图片重置
 const resetUploadImage = () => {
