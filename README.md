@@ -9,6 +9,10 @@ Pix2Text 期望成为 `Mathpix` 的免费开源 Python 替代工具，目前已�
 
 欢迎大家提建议与找bug，帮助软件的完善。
 
+下面是我的公众号，有任何反馈可以在这上面反馈
+
+<img src="./docx/img/gzh.png" width="30%"/>
+
 ## 项目地址
 ### p2t-app地址
 ```
@@ -24,9 +28,11 @@ https://github.com/wailsapp
 ```
 ## 项目已开发界面
 ### 上传界面
-![](./img/upload.png)
-### 关于界面
+<img src="./docx/img/upload-page.png" width="50%"/>
 
-![](./img/about.png)
+### 历史记录
+<img src="./docx/img/history-page.png" width="50%"/>
 
-![](./img/about-thank.png)
+### 暗黑模式界面
+<img src="./docx/img/dark.png" width="50%"/>
+
