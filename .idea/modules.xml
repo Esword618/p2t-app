@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/pix2text-app.iml" filepath="$PROJECT_DIR$/.idea/pix2text-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/p2t-app.iml" filepath="$PROJECT_DIR$/.idea/p2t-app.iml" />
     </modules>
   </component>
 </project>

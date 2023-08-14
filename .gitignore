@@ -1,6 +1,8 @@
-### 忽略文件夹
+.git
 .idea
+.vscode
 test
+build/bin
+frontend/.vscode
 frontend/dist
 frontend/node_modules
-build/bin
