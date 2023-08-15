@@ -2,7 +2,7 @@ package config
 
 //const BaseSaveImPath = "E:\\goproject\\src\\p2t\\image\\"
 
-const Version = "v0.2.0"
+const Version = "v0.2.1"
 
 const (
 	GetReleasesUrl = "https://api.github.com/repos/Esword618/p2t-app/releases/latest"
