@@ -1,0 +1,10 @@
+.git
+.idea
+.vscode
+test
+build/bin
+frontend/.vscode
+frontend/dist
+frontend/node_modules
+FileStorage
+config.yaml
